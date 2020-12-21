@@ -1,19 +1,18 @@
 # LuckyDraw
 
-To start your Phoenix server:
+Server for luckydraw app of 2020 year end party
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+## To start your Phoenix server:
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+  * Build Docker image with `docker-compose build`
+  * Start Phoenix endpoint in Docker container with `docker-compose up`
+  * You may encounter error when you first time start the server, fix with `docker-compose run web mix ecto.setup`
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Test
 
-## Learn more
+  * `docker-compose run web mix test`
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Run server in background
+
+  * `docker-compose up -d`
+  * stop with `docker-compose stop`
