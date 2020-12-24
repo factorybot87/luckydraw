@@ -1,8 +1,7 @@
 defmodule LuckyDrawWeb.Router do
   use LuckyDrawWeb, :router
 
-  forward "/api", Absinthe.Plug,
-    schema: LuckyDrawWeb.Schema
+  forward "/api", Absinthe.Plug, schema: LuckyDrawWeb.Schema
 
   # Enables LiveDashboard only for development
   #
