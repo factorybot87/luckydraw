@@ -17,8 +17,31 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/typescript', '@babel/preset-react', '@babel/preset-env']
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/typescript']
           }
+        }
+      },
+      {
+        test: /\.((c|sa|sc)ss)$/i,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: { auto: true }
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 8192
         }
       }
     ]
@@ -37,7 +60,7 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
-        files: './src/**/*'
+        files: './src/**/*.{ts,tsx,js,jsx}'
       }
     }),
     new HtmlWebpackPlugin({
