@@ -1,13 +1,8 @@
 defmodule LuckyDrawWeb.Router do
   use LuckyDrawWeb, :router
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  scope "/api", LuckyDrawWeb do
-    pipe_through :api
-  end
+  forward "/api", Absinthe.Plug,
+    schema: LuckyDrawWeb.Schema
 
   # Enables LiveDashboard only for development
   #
