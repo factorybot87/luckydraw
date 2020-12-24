@@ -11,7 +11,6 @@ defmodule LuckyDraw.Lottery.Award do
     timestamps()
   end
 
-  @doc false
   def changeset(award, attrs) do
     award
     |> cast(attrs, [])
