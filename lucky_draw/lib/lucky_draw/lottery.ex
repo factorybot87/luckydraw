@@ -7,4 +7,10 @@ defmodule LuckyDraw.Lottery do
   def list_awards do
     Repo.all(Award)
   end
+
+  def create_award(attrs \\ %{}) do
+    %Award{}
+    |> Award.changeset(attrs)
+    |> Repo.insert()
+  end
 end
