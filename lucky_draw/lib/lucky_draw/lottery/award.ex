@@ -13,7 +13,7 @@ defmodule LuckyDraw.Lottery.Award do
 
   def changeset(award, attrs) do
     award
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:content, :price, :provider_name, :winner])
+    |> validate_required([:content, :price])
   end
 end
