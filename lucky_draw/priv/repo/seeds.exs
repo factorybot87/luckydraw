@@ -8,7 +8,7 @@ Repo.insert!(%Award{id: 1, content: "The Last of Us II", price: 590}, opts)
 Repo.insert!(
   %Award{
     id: 2,
-    content: "PS5 Limited Edition The Last of Us II GOTY Bundle",
+    content: "PS5 Educational Edition The Last of Us II GOTY Bundle",
     price: 16490,
     provider_name: "SONY"
   },
