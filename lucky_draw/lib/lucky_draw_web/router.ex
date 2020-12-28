@@ -1,14 +1,7 @@
 defmodule LuckyDrawWeb.Router do
   use LuckyDrawWeb, :router
 
-  pipeline :api do
-    plug CORSPlug
-  end
-
-  scope "/api" do
-    pipe_through :api
-    forward "/", Absinthe.Plug, schema: LuckyDrawWeb.Schema
-  end
+  forward "/api", Absinthe.Plug, schema: LuckyDrawWeb.Schema
 
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
