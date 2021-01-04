@@ -32,4 +32,5 @@
 .winner--none {
   @extend .winner;
   border: 2px dotted black;
+  cursor: pointer;
 }
