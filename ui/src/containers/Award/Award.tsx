@@ -7,7 +7,7 @@ import { routePath } from '../App'
 
 function Award() {
   const history = useHistory()
-  const handleGetWinner = useCallback(() => history.push(routePath.draw), [history])
+  const handleGetWinner = useCallback(() => history.push(routePath.drawer), [history])
 
   return (
     <AwardContext.Provider
