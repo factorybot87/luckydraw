@@ -43,20 +43,23 @@ module.exports = {
         options: {
           limit: 8192
         }
+      },
+      {
+        test: /\.(mp3)$/i,
+        loader: 'file-loader'
       }
     ]
   },
   devServer: {
     host: 'localhost',
     hot: true,
-    open: true,
     writeToDisk: true
   },
   watchOptions: {
     poll: 1000
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.css', '.scss'],
     alias: {
       '@src': path.resolve(__dirname, 'src')
     }

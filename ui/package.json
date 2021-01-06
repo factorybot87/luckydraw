@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
-    "start": "webpack serve  --config webpack.config.js",
+    "start": "webpack serve  --config webpack.config.js --open 'google chrome'",
     "apollo:compile": "mkdir -p ./src/__generated__ && apollo client:codegen ./src/__generated__/ --target=typescript --localSchemaFile=./schema.graphql --queries=./src/query/**/*.ts --outputFlat",
     "apollo:watch": "npm run apollo:compile -- --watch"
   },
@@ -19,6 +19,7 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/runtime": "^7.12.5",
+    "@types/classnames": "^2.2.11",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -47,6 +48,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "@apollo/client": "^3.3.6",
     "graphql": "^15.4.0",
     "konva": "^7.2.2",

@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './Home.scss'
-import { routePath } from '@src/config/appConfig'
+import routes from '@src/constants/routes'
 import CatImg from '@src/assets/lovely-cat.png'
 import CoinPot from '@src/assets/coin-pot.png'
 import Wheel from '@src/assets/wheel.png'
@@ -24,7 +24,7 @@ export default function Home() {
           </div>
         </div>
         <div className={style.row}>
-          <Link to={routePath.award}>
+          <Link to={routes.award}>
             <div className={style.rectangle}>
               <div className={style.rowItem}>
                 <img src={CoinPot} />
