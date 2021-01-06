@@ -1,0 +1,7 @@
+@import 'Src/common/variables.scss';
+
+.default {
+  overflow: auto;
+  background-color: $light-yellow;
+  min-height: 900px;
+}

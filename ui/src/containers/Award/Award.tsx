@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import AwardList from './component/AwardList'
 import AwardContext from './AwardContext'
-import { routePath } from '../App'
+import { routePath } from '@src/config/appConfig'
 
 function Award() {
   const history = useHistory()
