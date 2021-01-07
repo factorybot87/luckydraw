@@ -18,7 +18,7 @@ function AwardItem(props: Props) {
     <div className={style.container}>
       <div className={style.prize}>
         <p>
-          {content} ({price})
+          {content} (NT${price})
           <br />
           {providerName && <span className={style.provider}>From: {providerName}</span>}
         </p>
