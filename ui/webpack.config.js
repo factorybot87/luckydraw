@@ -58,7 +58,12 @@ module.exports = {
   watchOptions: {
     poll: 1000
   },
-  resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js', '.css', '.scss'] },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.css', '.scss'],
+    alias: {
+      '@src': path.resolve(__dirname, 'src')
+    }
+  },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
       async: false,
