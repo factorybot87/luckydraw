@@ -22,6 +22,11 @@
   font-size: 2em;
 }
 
+.provider {
+  color: $salmonpink;
+  font-size: 0.7em;
+}
+
 .winner {
   @extend .content;
   color: black;
