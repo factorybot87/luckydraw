@@ -1,9 +1,12 @@
-import React from 'react'
-import { Circle, Ring, Shape } from 'react-konva'
+import React, { RefObject } from 'react'
+import { Layer as LayerType } from 'konva/types/Layer'
+import { Circle, Layer, Ring, Shape } from 'react-konva'
 
 const COUNT = 8
 const START_DEG = -0.7
 const DEG = (2 / (COUNT * 2)) * Math.PI
+
+const _range = new Array(COUNT).fill(0)
 
 const MARGIN = 20
 const NEEDLE_HEIGHT = 50
@@ -52,34 +55,51 @@ export const WheelNeedle = () => {
   const start = getCoordinateOnCircle(150, NEEDLE_RADIUS, NEEDLE_CENTER)
 
   return (
-    <Shape
-      sceneFunc={(context, shape) => {
-        context.beginPath()
-        context.moveTo(NEEDLE_TIP.x, NEEDLE_TIP.y)
-        context.lineTo(start.x, start.y)
-        context.arc(
-          NEEDLE_CENTER.x,
-          NEEDLE_CENTER.y,
-          NEEDLE_RADIUS,
-          (1 - 60 / 360) * Math.PI,
-          (2 + 60 / 360) * Math.PI,
-          false
-        )
-        context.lineTo(NEEDLE_TIP.x, NEEDLE_TIP.y)
-        context.closePath()
-        context.fillStrokeShape(shape)
-      }}
-      fill={NEEDLE_COLOR}
-      stroke={NEEDLE_BORDER_COLOR}
-      strokeWidth={NEEDLE_BORDER_WIDTH}
-      shadowBlur={NEEDLE_SHADOW_BLUR}
-      shadowColor={NEEDLE_SHADOW_COLOR}
-    />
+    <Layer>
+      <Shape
+        sceneFunc={(context, shape) => {
+          context.beginPath()
+          context.moveTo(NEEDLE_TIP.x, NEEDLE_TIP.y)
+          context.lineTo(start.x, start.y)
+          context.arc(
+            NEEDLE_CENTER.x,
+            NEEDLE_CENTER.y,
+            NEEDLE_RADIUS,
+            (1 - 60 / 360) * Math.PI,
+            (2 + 60 / 360) * Math.PI,
+            false
+          )
+          context.lineTo(NEEDLE_TIP.x, NEEDLE_TIP.y)
+          context.closePath()
+          context.fillStrokeShape(shape)
+        }}
+        fill={NEEDLE_COLOR}
+        stroke={NEEDLE_BORDER_COLOR}
+        strokeWidth={NEEDLE_BORDER_WIDTH}
+        shadowBlur={NEEDLE_SHADOW_BLUR}
+        shadowColor={NEEDLE_SHADOW_COLOR}
+      />
+    </Layer>
   )
 }
 
+export const WheelCenter = () => (
+  <Layer>
+    <Circle
+      x={WHEEL_CENTER.x}
+      y={WHEEL_CENTER.y}
+      radius={WHEEL_CENTER_RADIUS}
+      fill={WHEEL_COLOR_BACK}
+      stroke={WHEEL_COLOR_FRONT}
+      strokeWidth={WHEEL_OUTLINE_BORDER_WIDTH}
+      shadowBlur={WHEEL_CENTER_SHADOW_BLUR}
+      shadowColor={WHEEL_CENTER_SHADOW_COLOR}
+    />
+  </Layer>
+)
+
 export const WheelBack = () => (
-  <>
+  <Layer>
     <Ring
       x={WHEEL_CENTER.x}
       y={WHEEL_CENTER.y}
@@ -99,31 +119,16 @@ export const WheelBack = () => (
       shadowBlur={WHEEL_OUTLINE_SHADOW_BLUR}
       shadowColor={WHEEL_OUTLINE_SHADOW_COLOR}
     />
-  </>
+  </Layer>
 )
 
-export const WheelCenter = () => (
-  <Circle
-    x={WHEEL_CENTER.x}
-    y={WHEEL_CENTER.y}
-    radius={WHEEL_CENTER_RADIUS}
-    fill={WHEEL_COLOR_BACK}
-    stroke={WHEEL_COLOR_FRONT}
-    strokeWidth={WHEEL_OUTLINE_BORDER_WIDTH}
-    shadowBlur={WHEEL_CENTER_SHADOW_BLUR}
-    shadowColor={WHEEL_CENTER_SHADOW_COLOR}
-  />
-)
-
-export const WheelFront = () => {
-  const range = new Array(COUNT).fill(0)
-
+export const WheelFront = ({ layerRef }: { layerRef: RefObject<LayerType> }) => {
   return (
-    <>
-      {range.map((_, idx) => (
+    <Layer ref={layerRef} x={WHEEL_CENTER.x} y={WHEEL_CENTER.y}>
+      {_range.map((_, idx) => (
         <WheelFrontArc key={idx} start={START_DEG + idx * 2 * DEG} />
       ))}
-    </>
+    </Layer>
   )
 }
 
@@ -135,8 +140,8 @@ const WheelFrontArc = ({ start }: { start: number }) => {
     <Shape
       sceneFunc={(context, shape) => {
         context.beginPath()
-        context.moveTo(WHEEL_CENTER.x, WHEEL_CENTER.y)
-        context.arc(WHEEL_CENTER.x, WHEEL_CENTER.y, RADIUS, startAngle, endAngle, false)
+        context.moveTo(0, 0)
+        context.arc(0, 0, RADIUS, startAngle, endAngle, false)
         context.closePath()
         context.fillStrokeShape(shape)
       }}
