@@ -12,7 +12,6 @@ function Award() {
   return (
     <AwardContext.Provider
       value={{
-        mockData: [true, false, false, false, true],
         handleGetWinner: handleGetWinner
       }}
     >

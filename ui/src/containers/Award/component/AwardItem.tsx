@@ -2,20 +2,25 @@ import React, { useContext } from 'react'
 
 import style from './AwardItemStyle.scss'
 import AwardContext from '../AwardContext'
+import { AwardData } from '../../../__generated__/AwardData'
 
 interface Props {
-  winner: boolean
+  award: AwardData
 }
 
 function AwardItem(props: Props) {
-  const { winner } = props
+  const {
+    award: { content, price, winner }
+  } = props
   const { handleGetWinner } = useContext(AwardContext)
 
   return (
     <div className={style.container}>
-      <div className={style.prize}>$100.000</div>
+      <div className={style.prize}>
+        {content} ({price})
+      </div>
       {winner ? (
-        <div className={style.winner}>MICHAEL</div>
+        <div className={style.winner}>{winner}</div>
       ) : (
         <div className={style['winner--none']} onClick={handleGetWinner}>
           抽 DRAW ガチャる

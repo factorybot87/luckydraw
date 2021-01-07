@@ -1,12 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useQuery } from '@apollo/client'
 
 import style from './AwardListStyle.scss'
 import logo from '../../../assets/access-logo.png'
-import AwardContext from '../AwardContext'
 import AwardItem from './AwardItem'
+import { AWARD_LIST_QUERY } from '../../../query/award'
+import { AwardsList } from '../../../__generated__/AwardsList'
 
 function AwardList() {
-  const { mockData } = useContext(AwardContext)
+  const { data: awardsListData } = useQuery<AwardsList>(AWARD_LIST_QUERY)
 
   return (
     <div className={style.container}>
@@ -17,8 +19,8 @@ function AwardList() {
         </h1>
       </div>
       <div className={style.content}>
-        {mockData.map((e, i) => (
-          <AwardItem key={i} winner={e} />
+        {awardsListData?.awards?.map((e) => (
+          <AwardItem key={e.id} award={e} />
         ))}
       </div>
     </div>
