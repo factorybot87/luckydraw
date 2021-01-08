@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 const AwardFragment = {
   detail: gql`
-    fragment detail on Award {
+    fragment AwardData on Award {
       content
       id
       price
@@ -15,7 +15,7 @@ const AwardFragment = {
 export const AWARD_LIST_QUERY = gql`
   query AwardsList {
     awards {
-      ...detail
+      ...AwardData
     }
   }
   ${AwardFragment.detail}
