@@ -2,48 +2,59 @@ defmodule LuckyDrawWeb.Schema do
   use Absinthe.Schema
   import_types(LuckyDrawWeb.Schema.Lottery)
 
-  alias LuckyDrawWeb.Resolver
+  alias LuckyDrawWeb.Resolver.Lottery
 
   query do
     @desc "Get all awards"
     field :awards, list_of(:award) do
-      resolve(&Resolver.Lottery.list_awards/3)
+      resolve(&Lottery.list_awards/3)
     end
 
-    @desc "Get an award by id"
-    field :award, :award do
-      arg(:id, non_null(:id))
-
-      resolve(&Resolver.Lottery.get_award/3)
+    @desc "Get all candidates"
+    field :candidates, list_of(:candidate) do
+      resolve(&Lottery.list_candidates/3)
     end
   end
 
   mutation do
-    @desc "Create an award"
-    field :create_award, type: :award do
+    @desc "Add an award"
+    field :add_award, type: :award do
       arg(:content, non_null(:string))
       arg(:price, non_null(:integer))
       arg(:provider_name, :string)
 
-      resolve(&Resolver.Lottery.create_award/3)
+      resolve(&Lottery.add_award/3)
     end
 
-    @desc "Update an award"
-    field :update_award, type: :award do
+    @desc "Edit an award"
+    field :edit_award, type: :award do
       arg(:id, non_null(:id))
       arg(:content, :string)
       arg(:price, :integer)
       arg(:provider_name, :string)
-      arg(:winner, :string)
 
-      resolve(&Resolver.Lottery.update_award/3)
+      resolve(&Lottery.edit_award/3)
     end
 
     @desc "Delete an award"
     field :delete_award, type: :award do
       arg(:id, non_null(:id))
 
-      resolve(&Resolver.Lottery.delete_award/3)
+      resolve(&Lottery.delete_award/3)
+    end
+
+    @desc "Draw a winner"
+    field :draw_winner, type: :candidate do
+      arg(:award_id, non_null(:id))
+
+      resolve(&Lottery.draw_winner)
+    end
+
+    @desc "Give up an award"
+    field :give_up_award, type: :candidate do
+      arg(:candidate_id, non_null(:id))
+
+      resolve(&Lottery.give_up_award)
     end
   end
 end
