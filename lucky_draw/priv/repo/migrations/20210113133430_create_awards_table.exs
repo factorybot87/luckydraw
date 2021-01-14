@@ -1,12 +1,12 @@
-defmodule LuckyDraw.Repo.Migrations.CreateAwards do
+defmodule LuckyDraw.Repo.Migrations.CreateAwardsTable do
   use Ecto.Migration
 
   def change do
     create table(:awards) do
       add :content, :string, null: false
       add :price, :integer, null: false
-      add :provider_name, :string
-      add :winner, :string
+      add :provider, :string
+      add :winner, :id, default: nil
 
       timestamps()
     end
