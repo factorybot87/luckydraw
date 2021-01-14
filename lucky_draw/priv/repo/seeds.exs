@@ -1,5 +1,6 @@
 alias LuckyDraw.Repo
 alias LuckyDraw.Lottery.Award
+alias LuckyDraw.Lottery.Candidate
 
 opts = [on_conflict: :replace_all, conflict_target: :id]
 
@@ -10,7 +11,7 @@ Repo.insert!(
     id: 2,
     content: "PS5 Educational Edition The Last of Us II GOTY Bundle",
     price: 16490,
-    provider_name: "SONY"
+    provider: "SONY Education"
   },
   opts
 )
@@ -20,3 +21,8 @@ Repo.insert!(%Award{id: 4, content: "Switch", price: 9780}, opts)
 Repo.insert!(%Award{id: 5, content: "Xbox Series X", price: 15980}, opts)
 Repo.insert!(%Award{id: 6, content: "Xbox Series S", price: 9480}, opts)
 Repo.insert!(%Award{id: 7, content: "對馬戰鬼", price: 1790}, opts)
+
+Repo.insert!(%Candidate{id: 1, name: "Stanley"}, opts)
+Repo.insert!(%Candidate{id: 2, name: "YiShin"}, opts)
+Repo.insert!(%Candidate{id: 3, name: "Eric"}, opts)
+Repo.insert!(%Candidate{id: 4, name: "Michael"}, opts)
