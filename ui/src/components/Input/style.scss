@@ -1,11 +1,11 @@
 @import '@src/style/common.scss';
 
-.input {
+.inputContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: $input-font-size;
-  padding: 20px;
+  padding: 5px 20px;
   label {
     display: block;
   }
@@ -16,5 +16,18 @@
     padding: 10px;
     border: none;
     border-radius: $input-border-radius;
+    text-align: center;
+    outline: 0px;
+
+    &:focus {
+      border: $input-focus-border;
+    }
   }
+}
+
+.error {
+  text-align: start;
+  font-size: 16px;
+  color: $error-color;
+  padding-left: 10px;
 }
