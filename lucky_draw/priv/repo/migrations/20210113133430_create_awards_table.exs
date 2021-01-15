@@ -10,5 +10,7 @@ defmodule LuckyDraw.Repo.Migrations.CreateAwardsTable do
 
       timestamps()
     end
+
+    execute "ALTER SEQUENCE awards_id_seq RESTART WITH 100;"
   end
 end
