@@ -9,7 +9,7 @@ type RootQueryType {
 type Award {
   content: String!
   id: ID!
-  price: Int!
-  providerName: String
-  winner: String
+  price: Int
+  provider: String
+  winner: ID
 }
