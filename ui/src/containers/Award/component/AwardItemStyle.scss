@@ -1,3 +1,4 @@
+@import '@src/style/common.scss';
 @import '../mockVar.scss';
 
 .container {
@@ -11,7 +12,7 @@
   text-align: center;
   padding: 10px 0px;
   margin: 8px 0px;
-  width: 400px;
+  width: $content-width;
 }
 
 .prize {
@@ -38,4 +39,31 @@
   @extend .winner;
   border: 2px dotted black;
   cursor: pointer;
+}
+
+@keyframes neon-shine {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    background-color: $buttermilk;
+  }
+}
+
+.donateContent {
+  @extend .prize;
+  height: 200px;
+}
+
+.donateButton {
+  @extend .winner;
+  // color: #fff;
+  // background-color: #fff;
+  // box-shadow: 0 0 5px rgba(255, 65, 65, 1), 0 0 10px rgba(255, 65, 65, 1), 0 0 20px rgba(255, 65, 65, 1),
+  //   0 0 40px rgba(255, 65, 65, 1);
+
+  // animation: neon-shine 2s linear infinite;
 }

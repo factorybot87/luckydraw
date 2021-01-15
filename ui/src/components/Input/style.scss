@@ -1,0 +1,20 @@
+@import '@src/style/common.scss';
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: $input-font-size;
+  padding: 20px;
+  label {
+    display: block;
+  }
+  input {
+    display: block;
+    width: $input-width;
+    height: $input-height;
+    padding: 10px;
+    border: none;
+    border-radius: $input-border-radius;
+  }
+}
