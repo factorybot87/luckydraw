@@ -21,11 +21,20 @@
 .result_award {
   position: relative;
   background-color: #ffc306;
-  height: 184px;
-  line-height: 184px;
+  min-height: 184px;
+  max-height: 368px;
   color: white;
-  font-size: 128px;
+  font-size: 100px;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  div {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
 }
 
 .result_goldIcon {
