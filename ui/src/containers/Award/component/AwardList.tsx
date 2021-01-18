@@ -6,6 +6,7 @@ import logo from '../../../assets/access-logo.png'
 import AwardItem from './AwardItem'
 import { AWARD_LIST_QUERY } from '../../../query/award'
 import { AwardsList } from '../../../__generated__/AwardsList'
+import AwardCreation from './AwardCreation'
 
 function AwardList() {
   const { data: awardsListData } = useQuery<AwardsList>(AWARD_LIST_QUERY)
@@ -19,6 +20,7 @@ function AwardList() {
         </h1>
       </div>
       <div className={style.content}>
+        <AwardCreation />
         {awardsListData?.awards?.map((e) => (
           <AwardItem key={e.id} award={e} />
         ))}
