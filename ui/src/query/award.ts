@@ -6,7 +6,7 @@ const AwardFragment = {
       content
       id
       price
-      providerName
+      provider
       winner
     }
   `

@@ -10,7 +10,7 @@ interface Props {
 
 function AwardItem(props: Props) {
   const {
-    award: { content, price, winner, providerName }
+    award: { content, price, winner, provider }
   } = props
   const { handleGetWinner } = useContext(AwardContext)
 
@@ -20,7 +20,7 @@ function AwardItem(props: Props) {
         <p>
           {content} (NT${price})
           <br />
-          {providerName && <span className={style.provider}>From: {providerName}</span>}
+          {provider && <span className={style.provider}>From: {provider}</span>}
         </p>
       </div>
       {winner ? (
