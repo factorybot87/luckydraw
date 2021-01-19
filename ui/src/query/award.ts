@@ -29,3 +29,12 @@ export const CUR_AWARD_QUERY = gql`
   }
   ${AwardFragment.detail}
 `
+
+export const GIVE_UP_AWARD_QUERY = gql`
+  mutation GiveUpAward($awardId: ID!) {
+    giveUpAward(awardId: $awardId) {
+      ...AwardData
+    }
+  }
+  ${AwardFragment.detail}
+`

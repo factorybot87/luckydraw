@@ -1,8 +1,8 @@
 import { ApolloClient, gql, InMemoryCache, makeVar } from '@apollo/client'
-import { AwardData } from '@src/__generated__/AwardData'
+import { Award, Candidate } from '@src/model/schema'
 
-export const awardVar = makeVar<AwardData | undefined>(undefined)
-export const winnerVar = makeVar<any>({ id: '12345', name: 'Stanley' })
+export const awardVar = makeVar<Award | undefined>(undefined)
+export const winnerVar = makeVar<Candidate | undefined | null>(undefined)
 
 const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -26,7 +26,6 @@ const cache: InMemoryCache = new InMemoryCache({
 const typeDefs = gql`
   extend type Query {
     curAward: Award
-    # Candidate not defined yet.
     winner: Candidate
   }
 `

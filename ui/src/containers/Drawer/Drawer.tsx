@@ -77,14 +77,13 @@ export default function Drawer() {
   const [readyToMove, setReadyToMove] = useState({ animationOver: false, foundWinner: false })
   const frontRef = useRef<Layer>(null)
   const { data } = useQuery<GetCurrentAward>(CUR_AWARD_QUERY)
-  const [findWinner] = useMutation<ChooseWinner>(CHOOSE_WINNER, {
+  const [findWinner, { error }] = useMutation<ChooseWinner>(CHOOSE_WINNER, {
     onCompleted(data) {
-      winnerVar(data)
+      winnerVar(data?.drawWinner)
       setReadyToMove((pre) => ({ ...pre, foundWinner: true }))
     },
-    onError() {
-      //temp
-      setReadyToMove((pre) => ({ ...pre, foundWinner: true }))
+    onError(error) {
+      console.log(error)
     }
   })
 
@@ -114,6 +113,17 @@ export default function Drawer() {
     anim.start()
     setTimeout(() => anim.stop(), ANIMATION_TIME)
   }
+
+  if (error)
+    return (
+      <div>
+        Something went wrong :(
+        <div>{error.networkError?.message}</div>
+        {error.graphQLErrors.map(({ message }, idx) => (
+          <div key={idx}>{message}</div>
+        ))}
+      </div>
+    )
 
   return data?.curAward ? (
     <div className={styles.drawer}>

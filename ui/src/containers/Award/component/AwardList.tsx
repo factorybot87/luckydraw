@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useQuery } from '@apollo/client'
 
 import style from './AwardListStyle.scss'
@@ -7,9 +7,21 @@ import AwardItem from './AwardItem'
 import { AWARD_LIST_QUERY } from '../../../query/award'
 import { AwardsList } from '../../../__generated__/AwardsList'
 import AwardCreation from './AwardCreation'
+import Loading from '@src/components/Loading'
 
 function AwardList() {
-  const { data: awardsListData } = useQuery<AwardsList>(AWARD_LIST_QUERY)
+  const { data: awardsListData, loading } = useQuery<AwardsList>(AWARD_LIST_QUERY, { fetchPolicy: 'network-only' })
+
+  const sortList = useMemo(
+    () =>
+      awardsListData?.awards &&
+      awardsListData.awards.slice().sort((award1, award2) => {
+        console.log('award', award1, award2)
+
+        return Number(award1?.id) - Number(award2?.id)
+      }),
+    [awardsListData]
+  )
 
   return (
     <div className={style.container}>
@@ -20,10 +32,14 @@ function AwardList() {
         </h1>
       </div>
       <div className={style.content}>
-        <AwardCreation />
-        {awardsListData?.awards?.map((e) => (
-          <AwardItem key={e.id} award={e} />
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <AwardCreation />
+            {sortList?.map((e) => e && <AwardItem key={e.id} award={e} />)}
+          </>
+        )}
       </div>
     </div>
   )
