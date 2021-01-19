@@ -12,6 +12,7 @@ import { randomGif } from './randomGif'
 import routes from '../../constants/routes'
 import { GIVE_UP_AWARD_QUERY } from '@src/query/award'
 import { GiveUpAward, GiveUpAwardVariables } from '@src/__generated__/GiveUpAward'
+import AudioPlayer, { AudioMimeTypes } from '../../components/AudioPlayer'
 
 const randomGifInstance = randomGif()
 
@@ -81,11 +82,7 @@ const Winner = ({}) => {
           </Button>
         )}
       </div>
-      <div className={style.audioContainer}>
-        <audio controls autoPlay>
-          <source src={sound} type='audio/mpeg' />
-        </audio>
-      </div>
+      <AudioPlayer url={sound} type={AudioMimeTypes.mpeg} />
     </>
   )
 }

@@ -14,6 +14,8 @@ import { ChooseWinner } from '@src/__generated__/ChooseWinner'
 import Slide from './components/Slide'
 import styles from '././DrawerStyle.scss'
 import routes from '../../constants/routes'
+import sound from '../../assets/drawer01.m4a'
+import AudioPlayer, { AudioMimeTypes } from '../../components/AudioPlayer'
 
 const ANIMATION_TIME = 10000
 const HALF_LIFE = ANIMATION_TIME / 2
@@ -129,6 +131,7 @@ export default function Drawer() {
     <div className={styles.drawer}>
       <Slide itemList={itemList} />
       <Wheel width={window.innerWidth} height={window.innerHeight} frontRef={frontRef} />
+      <AudioPlayer url={sound} type={AudioMimeTypes.m4a} />
     </div>
   ) : (
     <Redirect to={routes.award} />
