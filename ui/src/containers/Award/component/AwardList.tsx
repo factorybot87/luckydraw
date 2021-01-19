@@ -5,22 +5,31 @@ import style from './AwardListStyle.scss'
 import logo from '../../../assets/access-logo.png'
 import AwardItem from './AwardItem'
 import { AWARD_LIST_QUERY } from '../../../query/award'
+import { CANDIDATE_LIST_QUERY } from '../../../query/candidates'
 import { AwardsList } from '../../../__generated__/AwardsList'
+import { CandidatesList } from '../../../__generated__/CandidatesList'
+import AwardDerived from './AwardDerived'
 import AwardCreation from './AwardCreation'
 import Loading from '@src/components/Loading'
 
 function AwardList() {
   const { data: awardsListData, loading } = useQuery<AwardsList>(AWARD_LIST_QUERY, { fetchPolicy: 'network-only' })
+  const { data: candidatesListData } = useQuery<CandidatesList>(CANDIDATE_LIST_QUERY)
 
-  const sortList = useMemo(
+  const awardsData: AwardDerived[] = useMemo(
     () =>
-      awardsListData?.awards &&
-      awardsListData.awards.slice().sort((award1, award2) => {
-        console.log('award', award1, award2)
-
-        return Number(award1?.id) - Number(award2?.id)
-      }),
-    [awardsListData]
+      awardsListData?.awards
+        ?.map((award: any) => {
+          const candidateName =
+            candidatesListData?.candidates?.find((candidateToCheck: any) => candidateToCheck.id === award.winner)
+              ?.name ?? 'unknown'
+          return {
+            ...award,
+            winnerName: candidateName
+          }
+        })
+        .sort((award1, award2) => Number(award1?.id) - Number(award2?.id)) ?? [],
+    [awardsListData, candidatesListData]
   )
 
   return (
@@ -37,7 +46,7 @@ function AwardList() {
         ) : (
           <>
             <AwardCreation />
-            {sortList?.map((e) => e && <AwardItem key={e.id} award={e} />)}
+            {awardsData?.map((e) => e && <AwardItem key={e.id} award={e} />)}
           </>
         )}
       </div>

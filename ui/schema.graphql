@@ -13,8 +13,8 @@ type RootMutationType {
 
 type Candidate {
   id: ID!
-  name: String!
   isWinner: Boolean
+  name: String!
 }
 
 type RootQueryType {
