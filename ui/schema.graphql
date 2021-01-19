@@ -3,12 +3,14 @@ schema {
   mutation: RootMutationType
 }
 
-#for temp
 type RootMutationType {
-  findWinner(awardId: String): Candidate
+  drawWinner(awardId: ID!): Candidate
+  deleteAward(id: ID!): Award
+  addAward(content: String!, price: Int!, provider: String): Award
+  editAward(content: String, id: ID!, price: Int, provider: String): Award
+  giveUpAward(awardId: ID!): Award
 }
 
-#for temp
 type Candidate {
   id: ID!
   isWinner: Boolean
@@ -16,10 +18,10 @@ type Candidate {
 }
 
 type RootQueryType {
-  awards: [Award!]
+  awards: [Award]
+  candidates: [Candidate]
   curAward: Award
   winner: Candidate
-  candidates: [Candidate!]
 }
 
 type Award {

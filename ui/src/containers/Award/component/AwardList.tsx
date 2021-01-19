@@ -8,25 +8,30 @@ import { AWARD_LIST_QUERY } from '../../../query/award'
 import { CANDIDATE_LIST_QUERY } from '../../../query/candidates'
 import { AwardsList } from '../../../__generated__/AwardsList'
 import { CandidatesList } from '../../../__generated__/CandidatesList'
-import AwardCreation from './AwardCreation'
 import AwardDerived from './AwardDerived'
+import AwardCreation from './AwardCreation'
+import Loading from '@src/components/Loading'
 
 function AwardList() {
-  const { data: awardsListData } = useQuery<AwardsList>(AWARD_LIST_QUERY)
+  const { data: awardsListData, loading } = useQuery<AwardsList>(AWARD_LIST_QUERY, { fetchPolicy: 'network-only' })
   const { data: candidatesListData } = useQuery<CandidatesList>(CANDIDATE_LIST_QUERY)
+
   const awardsData: AwardDerived[] = useMemo(
     () =>
-      awardsListData?.awards?.map((award: any) => {
-        const candidateName =
-          candidatesListData?.candidates?.find((candidateToCheck: any) => candidateToCheck.id === award.winner)?.name ??
-          'unknown'
-        return {
-          ...award,
-          winnerName: candidateName
-        }
-      }) ?? [],
+      awardsListData?.awards
+        ?.map((award: any) => {
+          const candidateName =
+            candidatesListData?.candidates?.find((candidateToCheck: any) => candidateToCheck.id === award.winner)
+              ?.name ?? 'unknown'
+          return {
+            ...award,
+            winnerName: candidateName
+          }
+        })
+        .sort((award1, award2) => Number(award1?.id) - Number(award2?.id)) ?? [],
     [awardsListData, candidatesListData]
   )
+
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -36,10 +41,14 @@ function AwardList() {
         </h1>
       </div>
       <div className={style.content}>
-        <AwardCreation />
-        {awardsData.map((e) => (
-          <AwardItem key={e.id} award={e} />
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <AwardCreation />
+            {awardsData?.map((e) => e && <AwardItem key={e.id} award={e} />)}
+          </>
+        )}
       </div>
     </div>
   )

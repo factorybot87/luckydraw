@@ -45,7 +45,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(mp3)$/i,
+        test: /\.(mp3|m4a)$/i,
         loader: 'file-loader'
       }
     ]

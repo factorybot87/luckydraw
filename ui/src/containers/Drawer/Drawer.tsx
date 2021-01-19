@@ -14,6 +14,8 @@ import { ChooseWinner } from '@src/__generated__/ChooseWinner'
 import Slide from './components/Slide'
 import styles from '././DrawerStyle.scss'
 import routes from '../../constants/routes'
+import sound from '../../assets/drawer01.m4a'
+import AudioPlayer, { AudioMimeTypes } from '../../components/AudioPlayer'
 
 const ANIMATION_TIME = 10000
 const HALF_LIFE = ANIMATION_TIME / 2
@@ -77,14 +79,13 @@ export default function Drawer() {
   const [readyToMove, setReadyToMove] = useState({ animationOver: false, foundWinner: false })
   const frontRef = useRef<Layer>(null)
   const { data } = useQuery<GetCurrentAward>(CUR_AWARD_QUERY)
-  const [findWinner] = useMutation<ChooseWinner>(CHOOSE_WINNER, {
+  const [findWinner, { error }] = useMutation<ChooseWinner>(CHOOSE_WINNER, {
     onCompleted(data) {
-      winnerVar(data)
+      winnerVar(data?.drawWinner)
       setReadyToMove((pre) => ({ ...pre, foundWinner: true }))
     },
-    onError() {
-      //temp
-      setReadyToMove((pre) => ({ ...pre, foundWinner: true }))
+    onError(error) {
+      console.log(error)
     }
   })
 
@@ -115,10 +116,22 @@ export default function Drawer() {
     setTimeout(() => anim.stop(), ANIMATION_TIME)
   }
 
+  if (error)
+    return (
+      <div>
+        Something went wrong :(
+        <div>{error.networkError?.message}</div>
+        {error.graphQLErrors.map(({ message }, idx) => (
+          <div key={idx}>{message}</div>
+        ))}
+      </div>
+    )
+
   return data?.curAward ? (
     <div className={styles.drawer}>
       <Slide itemList={itemList} />
       <Wheel width={window.innerWidth} height={window.innerHeight} frontRef={frontRef} />
+      <AudioPlayer url={sound} type={AudioMimeTypes.m4a} />
     </div>
   ) : (
     <Redirect to={routes.award} />
