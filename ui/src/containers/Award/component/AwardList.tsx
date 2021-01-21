@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import style from './AwardListStyle.scss'
 import logo from '../../../assets/access-logo.png'
 import AwardItem from './AwardItem'
+import AwardItemCompact from './AwardItemCompact'
 import { ADD_AWARD, AWARD_LIST_QUERY } from '../../../query/award'
 import { CANDIDATE_LIST_QUERY } from '../../../query/candidates'
 import { AwardsList } from '../../../__generated__/AwardsList'
@@ -11,8 +12,10 @@ import AwardDerived from './AwardDerived'
 import AwardCreation from './AwardCreation'
 import Loading from '@src/components/Loading'
 import { AwardCreationBody } from './AwardCreation'
+import CatImg from '@src/assets/lovely-cat.png'
 
 function AwardList() {
+  const [fullView, setFullView] = useState(true)
   const { data: awardsListData, loading, refetch } = useQuery<AwardsList>(AWARD_LIST_QUERY, {
     fetchPolicy: 'network-only'
   })
@@ -23,6 +26,9 @@ function AwardList() {
       document.documentElement.scrollTop = document.documentElement.scrollHeight
     }
   })
+  const onViewModeChange = () => {
+    setFullView((previous) => !previous)
+  }
 
   const awardsData: AwardDerived[] = useMemo(
     () =>
@@ -39,6 +45,9 @@ function AwardList() {
         .sort((award1, award2) => Number(award1?.id) - Number(award2?.id)) ?? [],
     [awardsListData, candidatesListData]
   )
+  const AwardComponent = (awardProps: any) => {
+    return fullView ? <AwardItem {...awardProps} /> : <AwardItemCompact {...awardProps} />
+  }
 
   return (
     <div className={style.container}>
@@ -62,10 +71,12 @@ function AwardList() {
                 })
               }}
             />
-            {awardsData?.map((e) => e && <AwardItem key={e.id} award={e} />)}
+            {awardsData?.map((e) => e && <AwardComponent key={e.id} award={e} />)}
           </>
         )}
       </div>
+      <img src={CatImg} className={style.decoration} alt='fortunate cat' />
+      <div className={style.viewChange} onClick={onViewModeChange} />
     </div>
   )
 }
