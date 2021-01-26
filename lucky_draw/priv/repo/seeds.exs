@@ -2,27 +2,26 @@ alias LuckyDraw.Repo
 alias LuckyDraw.Lottery.Award
 alias LuckyDraw.Lottery.Candidate
 
-opts = [on_conflict: :replace_all, conflict_target: :id]
+defmodule SeedHelper do
+  def update_id_in_sequence(changesets) do
+    changesets
+    |> Stream.with_index(1)
+    |> Enum.map(fn {changeset, index} -> Map.put(changeset, :id, index) end)
+  end
 
-Repo.insert!(%Award{id: 1, content: "The Last of Us II", price: 590}, opts)
+  def insert_all(changesets) do
+    opts = [on_conflict: :replace_all, conflict_target: :id]
+    changesets |> Enum.each(&Repo.insert!(&1, opts))
+  end
+end
 
-Repo.insert!(
-  %Award{
-    id: 2,
-    content: "PS5 Educational Edition The Last of Us II GOTY Bundle",
-    price: 16490,
-    provider: "SONY Education"
-  },
-  opts
-)
+awards = [
+  # %Award{content: "", price: 0},
+]
 
-Repo.insert!(%Award{id: 3, content: "PS5 Digital", price: 12980}, opts)
-Repo.insert!(%Award{id: 4, content: "Switch", price: 9780}, opts)
-Repo.insert!(%Award{id: 5, content: "Xbox Series X", price: 15980}, opts)
-Repo.insert!(%Award{id: 6, content: "Xbox Series S", price: 9480}, opts)
-Repo.insert!(%Award{id: 7, content: "對馬戰鬼", price: 1790}, opts)
+candidates = [
+  # %Candidate{name: ""},
+]
 
-Repo.insert!(%Candidate{id: 1, name: "Stanley"}, opts)
-Repo.insert!(%Candidate{id: 2, name: "YiShin"}, opts)
-Repo.insert!(%Candidate{id: 3, name: "Eric"}, opts)
-Repo.insert!(%Candidate{id: 4, name: "Michael"}, opts)
+[awards, candidates]
+|> Enum.each(&(&1 |> SeedHelper.update_id_in_sequence() |> SeedHelper.insert_all()))

@@ -8,13 +8,9 @@ Server for luckydraw app of 2020 year end party
   * Start Phoenix endpoint in Docker container with `docker-compose up`
   * You may encounter error when you first time start the server, fix with `docker-compose run web mix ecto.setup`
 
-## Migrate
+## Reset database
 
-  * `docker-compose run web mix ecto.migrate`
-
-## Seed
-
-  * Populate database with `docker-compose run web mix run priv/repo/seeds.exs`
+  * `docker-compose run --rm web mix ecto.reset`
 
 ## Test
 
@@ -24,3 +20,9 @@ Server for luckydraw app of 2020 year end party
 
   * `docker-compose up -d`
   * stop with `docker-compose stop`
+
+## Script
+
+  * `ruby script/puts.rb <filename>`
+  * copy and paste output result to `priv/repo/seeds.exs`
+  * reset database
