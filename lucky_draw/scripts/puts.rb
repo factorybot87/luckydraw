@@ -3,6 +3,7 @@ FILENAME = ARGV[0]
 def line_to_array(filename)
   file = File.open(filename)
   file.readlines.map(&:chomp)
+  file.close
 end
 
 if /award/.match(FILENAME)
