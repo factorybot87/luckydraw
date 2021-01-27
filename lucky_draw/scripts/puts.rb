@@ -1,13 +1,14 @@
 FILENAME = ARGV[0]
 
-def line_to_array(filename)
+def read_lines(filename)
   file = File.open(filename)
-  file.readlines.map(&:chomp)
+  lines = file.readlines.map(&:chomp)
   file.close
+  lines
 end
 
 if /award/.match(FILENAME)
-  awards = line_to_array(FILENAME)
+  awards = read_lines(FILENAME)
   awards = awards.map { |award|
     award.split(",")
   }
@@ -15,7 +16,7 @@ if /award/.match(FILENAME)
     puts "%Award{content: \"#{content}\", price: #{price}},"
   }
 elsif /candidate/.match(FILENAME)
-  candidates = line_to_array(FILENAME)
+  candidates = read_lines(FILENAME)
   candidates.each { |name| 
     puts "%Candidate{name: \"#{name}\"},"
   }
