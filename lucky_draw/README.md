@@ -26,3 +26,7 @@ Server for luckydraw app of 2020 year end party
   * `ruby script/puts.rb <filename>`
   * copy and paste output result to `priv/repo/seeds.exs`
   * reset database
+
+## Screenshot
+
+<img width="640" alt="Screen Shot 2021-12-08 at 12 06 18 PM" src="https://user-images.githubusercontent.com/79628930/145146652-e390aac8-2ebd-4c9b-b394-86fc12eb068e.png">
